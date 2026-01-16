@@ -13,6 +13,11 @@
   --hovered-color: rgb(143, 22, 213);
 }
 
+html {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+}
+
 .app {
   display: flex;
   justify-content: space-between;
