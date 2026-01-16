@@ -1,14 +1,9 @@
-/**
-  |============================
-  | include css partials with
-  | default @import url()
-  |============================
-*/
 /* Common styles */
 @import url("./header.css");
+@import url("./routines.css");
 
 :root {
-  --default-padding: 144px;
+  --default-padding: 24px;
   --main-color: rgb(177, 42, 255);
   --hovered-color: rgb(143, 22, 213);
 }
@@ -24,5 +19,22 @@ html {
   align-items: center;
   flex-direction: column;
   width: 100%;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
   height: 100%;
+  padding-left: var(--default-padding);
+  padding-right: var(--default-padding);
+}
+
+.container-title {
+  font-size: 22px;
+  font-weight: 5400;
+  color: #838383;
 }
