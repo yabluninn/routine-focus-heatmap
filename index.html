@@ -7,6 +7,61 @@
     <link rel="stylesheet" href="./styles/main.css" />
   </head>
   <body>
+    <main class="app">
+      <header class="header">
+        <div class="header-title-container">
+          <h1 class="header-title">Focus Heatmap</h1>
+          <p class="header-subtitle">Build routines. Keep streaks.</p>
+        </div>
+        <button class="header-action-button">New routine</button>
+      </header>
+      <section class="container">
+        <aside class="routines-container">
+          <p class="container-title">Your routines</p>
+          <div class="routines-list">
+            <p class="routines-empty-state">
+              No routines yet. Create your first one.
+            </p>
+            <article class="routine-item">
+              <p class="routine-name">Routine Name</p>
+              <p class="routine-progress">95%</p>
+            </article>
+          </div>
+        </aside>
+        <section class="today-container">
+          <p class="today-empty-state">Select a routine to start</p>
+          <div class="today-routine">
+            <p class="today-routine-name">Routine Name</p>
+            <div class="today-routine-steps">
+              <div class="trs-item">
+                <input
+                  type="checkbox"
+                  name="inpId"
+                  id="inpId"
+                  class="trs-input"
+                />
+                <label for="inpId">Step Item</label>
+              </div>
+            </div>
+            <p class="today-routine-progress">Progress: 66%</p>
+            <button class="today-routine-complete-button">Complete</button>
+          </div>
+        </section>
+        <aside class="stats-container">
+          <div class="stats-block">
+            <p class="container-title">Routine stats</p>
+            <div class="stats-list">
+              <p class="streak-label">Streak: 0 days</p>
+              <p class="best-streak-label">Best streak: 0 days</p>
+              <p class="weekly-label">Weekly: 75%</p>
+            </div>
+          </div>
+          <div class="heatmap-block">
+            <p class="container-title">Your heatmap</p>
+          </div>
+        </aside>
+      </section>
+    </main>
     <script type="module" src="./scripts/app.js"></script>
   </body>
 </html>
