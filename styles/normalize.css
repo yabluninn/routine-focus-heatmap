@@ -13,6 +13,12 @@ html {
   -webkit-text-size-adjust: 100%; /* 2 */
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* Sections
      ========================================================================== */
 
@@ -39,7 +45,8 @@ main {
 
 h1 {
   font-size: 2em;
-  margin: 0.67em 0;
+  margin: 0;
+  padding: 0;
 }
 
 /* Grouping content
@@ -136,6 +143,11 @@ sub {
 
 sup {
   top: -0.5em;
+}
+
+p {
+  margin: 0;
+  padding: 0;
 }
 
 /* Embedded content
