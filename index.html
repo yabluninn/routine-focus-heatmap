@@ -77,6 +77,50 @@
         </aside>
       </section>
     </main>
+    <div class="modal" id="create-modal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <p class="modal-title">Create routine</p>
+          <button class="modal-close-button">
+            <i class="fa-solid fa-x"></i>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="modal-input-container">
+            <label for="routine-name">Name</label>
+            <input
+              type="text"
+              id="routine-name"
+              name="routine-name"
+              class="modal-text-input"
+              placeholder="Routine name..."
+            />
+          </div>
+          <div class="modal-input-container">
+            <label for="routine-color">Color</label>
+            <input
+              type="color"
+              name="routine-color"
+              id="routine-color"
+              class="modal-color-input"
+            />
+          </div>
+          <div class="modal-input-container">
+            <label for="routine-goal">Goal (times per week)</label>
+            <input
+              type="number"
+              id="routine-goal"
+              name="routine-goal"
+              class="modal-number-input"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-footer-button cancel">Cancel</button>
+          <button class="modal-footer-button create">Create</button>
+        </div>
+      </div>
+    </div>
     <script type="module" src="./scripts/app.js"></script>
   </body>
 </html>
