@@ -20,11 +20,21 @@
 }
 
 .routines-empty-state {
-  font-size: 24px;
+  font-size: 16px;
   background-color: #f5f5f5;
+  border: 1px dashed #ddd;
   border-radius: 14px;
   padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   text-align: center;
+  gap: 8px;
+}
+
+.routines-empty-state i {
+  font-size: 20px;
 }
 
 .routine-item {
@@ -35,13 +45,19 @@
   background-color: #f5f5f5;
   border-radius: 14px;
   padding: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.routine-item:hover {
+  cursor: pointer;
+  background-color: #e4e4e4;
 }
 
 .routine-name {
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .routine-progress {
-  font-size: 18px;
+  font-size: 16px;
   color: #7c7c7c;
 }
