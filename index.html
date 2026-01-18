@@ -77,23 +77,24 @@
         </aside>
       </section>
     </main>
-    <div class="modal" id="create-modal">
+    <div class="modal hidden" id="create-modal">
       <div class="modal-container">
         <div class="modal-header">
           <p class="modal-title">Create routine</p>
-          <button class="modal-close-button">
+          <!-- <button class="modal-close-button">
             <i class="fa-solid fa-x"></i>
-          </button>
+          </button> -->
         </div>
         <div class="modal-content">
           <div class="modal-input-container">
-            <label for="routine-name">Name</label>
+            <label for="routine-name" class="required-label">Name</label>
             <input
               type="text"
               id="routine-name"
               name="routine-name"
               class="modal-text-input"
               placeholder="Routine name..."
+              required
             />
           </div>
           <div class="modal-input-container">
@@ -112,12 +113,15 @@
               id="routine-goal"
               name="routine-goal"
               class="modal-number-input"
+              placeholder="0"
             />
           </div>
         </div>
         <div class="modal-footer">
           <button class="modal-footer-button cancel">Cancel</button>
-          <button class="modal-footer-button create">Create</button>
+          <button class="modal-footer-button create">
+            <i class="fa-solid fa-plus"></i>Create
+          </button>
         </div>
       </div>
     </div>
