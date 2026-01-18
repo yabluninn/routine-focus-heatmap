@@ -1,0 +1,222 @@
+.today-container {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+
+.hidden {
+  display: block;
+}
+
+.today-empty-state {
+  font-size: 32px;
+  font-weight: 500;
+  background-color: #ffffff;
+  border: 2px dashed #ddd;
+  border-radius: 14px;
+  padding: 54px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 8px;
+  color: #4a4a4a;
+}
+
+.today-empty-state i {
+  font-size: 48px;
+}
+
+.today-empty-state span {
+  font-size: 18px;
+  font-weight: 400;
+  color: #7f7f7f;
+}
+
+.today-routine {
+  width: 50%;
+  background-color: white;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.today-routine-header {
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.today-routine-name {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.today-routine-edit-button {
+  border: 0;
+  background-color: transparent;
+  width: 35px;
+  height: 35px;
+}
+
+.today-routine-edit-button:hover {
+  cursor: pointer;
+}
+
+.today-routine-edit-button i {
+  font-size: 18px;
+  color: #7f7f7f;
+  transition: color 0.3s ease;
+}
+
+.today-routine-edit-button:hover i {
+  color: var(--main-color);
+}
+
+.today-routine-steps {
+  width: 90%;
+  height: 250px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trs-item {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.trs-item:hover {
+  background-color: #f5f5f5;
+}
+
+.trs-new-step-button {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background-color: transparent;
+  border: 0;
+  gap: 12px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #7f7f7f;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.trs-new-step-button:hover {
+  cursor: pointer;
+  background-color: #f5f5f5;
+}
+
+.checkbox-wrapper-30 .checkbox {
+  --bg: #fff;
+  --brdr: #a1a1a1;
+  --brdr-actv: #1e2235;
+  --brdr-hovr: #bbc1e1;
+  --dur: calc((var(--size, 2) / 2) * 0.6s);
+  display: inline-block;
+  width: calc(var(--size, 1) * 22px);
+  position: relative;
+  vertical-align: middle;
+}
+.checkbox-wrapper-30 .checkbox:after {
+  content: "";
+  width: 100%;
+  padding-top: 100%;
+  display: block;
+}
+.checkbox-wrapper-30 .checkbox > * {
+  position: absolute;
+}
+.checkbox-wrapper-30 .checkbox input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  background-color: var(--bg);
+  border-radius: calc(var(--size, 1) * 4px);
+  border: calc(var(--newBrdr, var(--size, 1)) * 1px) solid;
+  color: var(--newBrdrClr, var(--brdr));
+  outline: none;
+  margin: 0;
+  padding: 0;
+  transition: all calc(var(--dur) / 3) linear;
+}
+.checkbox-wrapper-30 .checkbox input:hover,
+.checkbox-wrapper-30 .checkbox input:checked {
+  --newBrdr: calc(var(--size, 1) * 2);
+}
+.checkbox-wrapper-30 .checkbox input:hover {
+  --newBrdrClr: var(--brdr-hovr);
+}
+.checkbox-wrapper-30 .checkbox input:checked {
+  --newBrdrClr: var(--brdr-actv);
+  transition-delay: calc(var(--dur) / 1.3);
+}
+.checkbox-wrapper-30 .checkbox input:checked + svg {
+  --dashArray: 16 93;
+  --dashOffset: 109;
+}
+.checkbox-wrapper-30 .checkbox svg {
+  fill: none;
+  left: 0;
+  pointer-events: none;
+  stroke: var(--stroke, var(--border-active));
+  stroke-dasharray: var(--dashArray, 93);
+  stroke-dashoffset: var(--dashOffset, 94);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2px;
+  top: 0;
+  transition: stroke-dasharray var(--dur), stroke-dashoffset var(--dur);
+}
+.checkbox-wrapper-30 .checkbox svg,
+.checkbox-wrapper-30 .checkbox input {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.today-routine-complete-button {
+  width: 150px;
+  height: 40px;
+  border: 0;
+  border-radius: 8px;
+  background-color: rgb(66, 235, 50);
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.today-routine-complete-button:hover {
+  cursor: pointer;
+  background-color: rgb(54, 193, 42);
+}

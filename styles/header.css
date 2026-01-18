@@ -39,3 +39,7 @@
   cursor: pointer;
   background-color: var(--hovered-color);
 }
+
+.header-action-button i {
+  margin-right: 12px;
+}
