@@ -8,6 +8,12 @@ const routineGoalInput = createModal.querySelector("#routine-goal");
 
 const nameInputErrorHint = createModal.querySelector(".name-input-error-hint");
 
+const routinesList = document.querySelector(".routines-list");
+const emptyRoutinesListState = document.querySelector(".routines-empty-state");
+
+const todayRoutine = document.querySelector(".today-routine");
+const emptyTodayRoutineState = document.querySelector(".today-empty-state");
+
 let validateInputTimeout = null;
 
 function resetRoutineForm() {
@@ -64,9 +70,62 @@ function getCreateRoutineFormData() {
   return { name, color, weeklyGoal };
 }
 
-function renderRoutinesList() {}
+function renderRoutinesList(routines, selectedRoutine) {
+  if (routines.length === 0) {
+    emptyRoutinesListState.classList.remove("hidden");
 
-function renderTodayRoutine() {}
+    routinesList
+      .querySelectorAll(".routine-item")
+      .forEach((item) => item.remove());
+
+    return;
+  } else if (routines.length > 0) {
+    emptyRoutinesListState.classList.add("hidden");
+
+    routinesList
+      .querySelectorAll(".routine-item")
+      .forEach((item) => item.remove());
+
+    routines.forEach((routine) => {
+      let progress = 0; // temporary
+
+      let selectedRoutineId = -1;
+
+      if (selectedRoutine != null) {
+        selectedRoutineId = selectedRoutine.id;
+      }
+
+      routinesList.insertAdjacentHTML(
+        "beforeend",
+        `   <article class="routine-item ${
+          routine.id === selectedRoutineId ? "active" : ""
+        }" data-routine-id="${routine.id}">
+                <div class="routine-item-meta">
+                    <div class="routine-color" style="background: ${
+                      routine.color
+                    };"></div>
+                    <p class="routine-name">${routine.name}</p>
+                </div>
+                <p class="routine-progress">${progress}%</p>
+            </article>`
+      );
+    });
+  }
+}
+
+function renderTodayRoutine(routine) {
+  if (routine === null) {
+    todayRoutine.classList.add("hidden");
+    emptyTodayRoutineState.classList.remove("hidden");
+    return;
+  } else {
+    todayRoutine.classList.remove("hidden");
+    emptyTodayRoutineState.classList.add("hidden");
+
+    const todayRoutineName = todayRoutine.querySelector(".today-routine-name");
+    todayRoutineName.textContent = routine.name;
+  }
+}
 
 export {
   openCreateRoutineModal,

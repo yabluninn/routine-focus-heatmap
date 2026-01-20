@@ -1,4 +1,9 @@
-import { selectRoutine, updateData } from "./state.js";
+import {
+  getRoutines,
+  getSelectedRoutine,
+  selectRoutine,
+  updateData,
+} from "./state.js";
 import {
   closeCreateRoutineModal,
   getCreateRoutineFormData,
@@ -8,12 +13,20 @@ import {
   validateInputs,
 } from "./ui.js";
 
+function renderApp() {
+  const selectedRoutine = getSelectedRoutine();
+  renderRoutinesList(getRoutines(), selectedRoutine);
+  renderTodayRoutine(selectedRoutine);
+}
+
 const newRoutineButton = document.querySelector(".header-action-button");
 
 const createModal = document.querySelector("#create-modal");
 
 const createRoutineButton = createModal.querySelector(".create");
 const closeCreateModalButton = createModal.querySelector(".cancel");
+
+const routinesList = document.querySelector(".routines-list");
 
 newRoutineButton.addEventListener("click", () => {
   openCreateRoutineModal();
@@ -56,8 +69,21 @@ createRoutineButton.addEventListener("click", () => {
 
   closeCreateRoutineModal();
 
-  renderRoutinesList();
-  renderTodayRoutine();
+  renderApp();
 
   console.log("Routine created successfully: ", routine);
 });
+
+routinesList.addEventListener("click", (e) => {
+  const itemElement = e.target.closest(".routine-item");
+  if (!itemElement) return;
+
+  const id = itemElement.dataset.routineId;
+  if (!id) return;
+
+  selectRoutine(id);
+
+  renderApp();
+});
+
+renderApp();
