@@ -47,4 +47,32 @@ function validateInputs() {
   } else return true;
 }
 
-export { openCreateRoutineModal, closeCreateRoutineModal, validateInputs };
+function getCreateRoutineFormData() {
+  const name = routineNameInput.value.trim();
+  const color = routineColorInput.value;
+  const rawGoal = routineGoalInput.value.trim();
+
+  let weeklyGoal = 0;
+
+  if (rawGoal === "") weeklyGoal = 5;
+  else {
+    weeklyGoal = Number(rawGoal);
+
+    if (weeklyGoal <= 0) weeklyGoal = 1;
+    if (weeklyGoal > 7) weeklyGoal = 7;
+  }
+  return { name, color, weeklyGoal };
+}
+
+function renderRoutinesList() {}
+
+function renderTodayRoutine() {}
+
+export {
+  openCreateRoutineModal,
+  closeCreateRoutineModal,
+  validateInputs,
+  getCreateRoutineFormData,
+  renderRoutinesList,
+  renderTodayRoutine,
+};

@@ -1,4 +1,4 @@
-import { load, save } from "./storage";
+import { load, save } from "./storage.js";
 
 function formatDateKey(date = new Date()) {
   const year = date.getFullYear();
@@ -38,6 +38,8 @@ function selectRoutine(id) {
   } else {
     state.selectedRoutineId = id;
   }
+
+  console.log("Selected RoutineId: ", state.selectedRoutineId);
 }
 
 function getTodayKey() {

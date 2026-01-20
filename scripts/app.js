@@ -1,6 +1,10 @@
+import { selectRoutine, updateData } from "./state.js";
 import {
   closeCreateRoutineModal,
+  getCreateRoutineFormData,
   openCreateRoutineModal,
+  renderRoutinesList,
+  renderTodayRoutine,
   validateInputs,
 } from "./ui.js";
 
@@ -9,13 +13,13 @@ const newRoutineButton = document.querySelector(".header-action-button");
 const createModal = document.querySelector("#create-modal");
 
 const createRoutineButton = createModal.querySelector(".create");
-const closeCreateModal = createModal.querySelector(".cancel");
+const closeCreateModalButton = createModal.querySelector(".cancel");
 
 newRoutineButton.addEventListener("click", () => {
   openCreateRoutineModal();
 });
 
-closeCreateModal.addEventListener("click", () => {
+closeCreateModalButton.addEventListener("click", () => {
   closeCreateRoutineModal();
 });
 
@@ -32,5 +36,28 @@ document.addEventListener("keydown", (e) => {
 });
 
 createRoutineButton.addEventListener("click", () => {
-  validateInputs();
+  if (!validateInputs()) return;
+
+  const formData = getCreateRoutineFormData();
+
+  const routine = {
+    id: crypto.randomUUID(),
+    name: formData.name,
+    color: formData.color,
+    weeklyGoal: formData.weeklyGoal,
+    steps: [],
+  };
+
+  updateData((data) => {
+    data.routines.push(routine);
+  });
+
+  selectRoutine(routine.id);
+
+  closeCreateRoutineModal();
+
+  renderRoutinesList();
+  renderTodayRoutine();
+
+  console.log("Routine created successfully: ", routine);
 });
