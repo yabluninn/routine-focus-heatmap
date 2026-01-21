@@ -53,10 +53,23 @@ function updateData(updater) {
   save(state.data);
 }
 
+function deleteRoutine(id) {
+  state.data.routines = state.data.routines.filter(
+    (routine) => routine.id !== id
+  );
+
+  if (id === state.selectedRoutineId) {
+    state.selectedRoutineId = null;
+  }
+
+  save(state.data);
+}
+
 export {
   getRoutines,
   getSelectedRoutine,
   selectRoutine,
   getTodayKey,
   updateData,
+  deleteRoutine,
 };

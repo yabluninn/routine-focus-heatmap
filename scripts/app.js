@@ -1,4 +1,5 @@
 import {
+  deleteRoutine,
   getRoutines,
   getSelectedRoutine,
   selectRoutine,
@@ -36,6 +37,9 @@ const openEditModalButton = document.querySelector(
 const closeEditRoutineButton = editRoutineModal.querySelector(".cancel");
 
 const editRoutineButton = editRoutineModal.querySelector(".create");
+const deleteRoutineButton = editRoutineModal.querySelector(
+  ".delete-routine-button"
+);
 
 const routinesList = document.querySelector(".routines-list");
 
@@ -150,6 +154,20 @@ editRoutineButton.addEventListener("click", () => {
 
   closeEditRoutineModal();
   renderApp();
+});
+
+deleteRoutineButton.addEventListener("click", () => {
+  const selectedRoutine = getSelectedRoutine();
+  if (!selectedRoutine) return;
+
+  const result = window.confirm(
+    `Delete selected routine: ${selectedRoutine.name}?`
+  );
+  if (result) {
+    deleteRoutine(selectedRoutine.id);
+    closeEditRoutineModal();
+    renderApp();
+  }
 });
 
 renderApp();
