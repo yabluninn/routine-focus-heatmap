@@ -89,7 +89,7 @@
                 <label for="inpId">Step Item</label>
               </div>
               <button class="trs-new-step-button">
-                <i class="fa-solid fa-plus"></i>New step
+                <i class="fa-solid fa-plus"></i>Add step
               </button>
             </div>
             <button class="today-routine-complete-button">Complete</button>
@@ -168,22 +168,23 @@
         </div>
         <div class="modal-content">
           <div class="modal-input-container">
-            <label for="routine-name" class="required-label">Name</label>
+            <label for="edit-routine-name" class="required-label">Name</label>
             <input
               type="text"
-              id="routine-name"
-              name="routine-name"
+              id="edit-routine-name"
+              name="edit-routine-name"
               class="modal-text-input"
               placeholder="Routine name..."
               required
             />
+            <p class="name-input-error-hint hidden">Name is required</p>
           </div>
           <div class="modal-input-container">
-            <label for="routine-color">Color</label>
+            <label for="edit-routine-color">Color</label>
             <input
               type="color"
-              name="routine-color"
-              id="routine-color"
+              name="edit-routine-color"
+              id="edit-routine-color"
               class="modal-color-input"
             />
           </div>
@@ -191,8 +192,8 @@
             <label for="routine-goal">Goal (times per week)</label>
             <input
               type="number"
-              id="routine-goal"
-              name="routine-goal"
+              id="edit-routine-goal"
+              name="edit-routine-goal"
               class="modal-number-input"
               placeholder="0"
             />
