@@ -214,7 +214,7 @@ function renderRoutineSteps(routine) {
                       <input
                         type="checkbox"
                         name="inpId"
-                        id="inpId"
+                        id="step-${step.id}"
                         class="trs-input"
                       />
                       <svg>
@@ -234,7 +234,7 @@ function renderRoutineSteps(routine) {
                       </symbol>
                     </svg>
                   </div>
-                  <label for="inpId" class="step-label">${step.name}</label>
+                  <label for="step-${step.id}" class="step-label">${step.name}</label>
                 </div>
                 <div class="trs-item-action-buttons">
                   <button><i class="fa-solid fa-arrow-up"></i></button>
