@@ -237,9 +237,13 @@ function renderRoutineSteps(routine) {
                   <label for="step-${step.id}" class="step-label">${step.name}</label>
                 </div>
                 <div class="trs-item-action-buttons">
-                  <button><i class="fa-solid fa-arrow-up"></i></button>
-                  <button><i class="fa-solid fa-arrow-down"></i></button>
-                  <button class="trs-delete-button">
+                  <button class="trs-move-up" type="button" title="Move up">
+                    <i class="fa-solid fa-arrow-up"></i>
+                  </button>
+                  <button class="trs-move-down" type="button" title="Move down">
+                    <i class="fa-solid fa-arrow-down"></i>
+                  </button>
+                  <button class="trs-delete-button" type="button" title="Delete">
                     <i class="fa-regular fa-trash-can"></i>
                   </button>
                 </div>

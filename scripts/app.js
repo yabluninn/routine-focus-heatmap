@@ -47,6 +47,8 @@ const todayRoutine = document.querySelector(".today-routine");
 const todayRoutineStepsList = todayRoutine.querySelector(
   ".today-routine-steps"
 );
+const todayRoutineStepsListContainer =
+  todayRoutineStepsList.querySelector(".trs-list");
 const addStepInputWrapper = todayRoutineStepsList.querySelector(
   ".trs-new-step-input-wrapper"
 );
@@ -195,6 +197,82 @@ addStepButton.addEventListener("click", () => {
 
     renderApp();
   } else return;
+});
+
+function deleteRoutineStep(id, selectedRoutine) {
+  updateData((data) => {
+    const routine = data.routines.find((r) => r.id === selectedRoutine.id);
+
+    if (!routine) return;
+
+    routine.steps = routine.steps.filter((step) => step.id !== id);
+  });
+
+  renderApp();
+  return;
+}
+
+function moveUpRoutineStep(id, selectedRoutine) {
+  updateData((data) => {
+    const routine = data.routines.find((r) => r.id === selectedRoutine.id);
+
+    if (!routine) return;
+
+    const index = routine.steps.findIndex((s) => s.id === id);
+    if (index <= 0) return;
+
+    [routine.steps[index - 1], routine.steps[index]] = [
+      routine.steps[index],
+      routine.steps[index - 1],
+    ];
+  });
+
+  renderApp();
+  return;
+}
+
+function moveDownRoutineStep(id, selectedRoutine) {
+  updateData((data) => {
+    const routine = data.routines.find((x) => x.id === selectedRoutine.id);
+    if (!routine) return;
+
+    const index = routine.steps.findIndex((s) => s.id === id);
+    if (index === -1 || index >= routine.steps.length - 1) return;
+
+    [routine.steps[index], routine.steps[index + 1]] = [
+      routine.steps[index + 1],
+      routine.steps[index],
+    ];
+  });
+
+  renderApp();
+  return;
+}
+
+todayRoutineStepsListContainer.addEventListener("click", (e) => {
+  const selectedRoutine = getSelectedRoutine();
+  if (!selectedRoutine) return;
+
+  const stepElement = e.target.closest(".trs-item");
+  if (!stepElement) return;
+
+  const stepId = stepElement.dataset.stepId;
+  if (!stepId) return;
+
+  if (e.target.closest(".trs-delete-button")) {
+    deleteRoutineStep(stepId, selectedRoutine);
+    return;
+  }
+
+  if (e.target.closest(".trs-move-up")) {
+    moveUpRoutineStep(stepId, selectedRoutine);
+    return;
+  }
+
+  if (e.target.closest(".trs-move-down")) {
+    moveDownRoutineStep(stepId, selectedRoutine);
+    return;
+  }
 });
 
 renderApp();
