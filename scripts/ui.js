@@ -171,6 +171,19 @@ function renderRoutinesList(routines, selectedRoutine) {
   }
 }
 
+function renderRoutineSteps(routine) {
+  const todayRoutineStepsList = todayRoutine.querySelector(
+    ".today-routine-steps"
+  );
+
+  todayRoutineStepsList
+    .querySelectorAll(".trs-item")
+    .forEach((item) => item.remove());
+
+  if (routine.steps.length > 0) {
+  }
+}
+
 function renderTodayRoutine(routine) {
   if (routine === null) {
     todayRoutine.classList.add("hidden");

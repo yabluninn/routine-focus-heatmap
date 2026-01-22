@@ -101,7 +101,7 @@
 .trs-item {
   width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
   gap: 12px;
   padding: 8px;
@@ -133,6 +133,70 @@
 .trs-new-step-button:hover {
   cursor: pointer;
   background-color: #f5f5f5;
+}
+
+.trs-new-step-input {
+  width: 100%;
+  height: 40px;
+  border: 0px;
+  font-size: 18px;
+  padding: 8px 0px;
+  border-bottom: 1px solid #ccc;
+}
+
+.trs-new-step-input::placeholder {
+  color: #ccc;
+}
+
+.trs-new-step-input:focus {
+  outline: none;
+}
+
+.trs-item-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.trs-item-action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-left: 1px solid #ddd;
+  padding-left: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.trs-item:hover .trs-item-action-buttons {
+  border-color: #ccc;
+}
+
+.trs-item-action-buttons button {
+  background-color: transparent;
+  border: 0;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #a1a1a1;
+  transition: background-color 0.3s ease;
+}
+
+.trs-item-action-buttons button:hover {
+  cursor: pointer;
+  background-color: #ddd;
+}
+
+.trs-item-action-buttons button:hover i {
+  color: #1e2235;
+}
+
+.trs-delete-button:hover i {
+  color: red !important;
 }
 
 .checkbox-wrapper-30 .checkbox {
