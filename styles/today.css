@@ -98,6 +98,17 @@
   gap: 8px;
 }
 
+.trs-list {
+  width: 100%;
+  height: fit-content;
+  max-height: 250px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .trs-item {
   width: 100%;
   display: flex;
@@ -135,13 +146,21 @@
   background-color: #f5f5f5;
 }
 
-.trs-new-step-input {
+.trs-new-step-input-wrapper {
   width: 100%;
   height: 40px;
-  border: 0px;
   font-size: 18px;
   padding: 8px 0px;
   border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trs-new-step-input {
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .trs-new-step-input::placeholder {
@@ -197,6 +216,50 @@
 
 .trs-delete-button:hover i {
   color: red !important;
+}
+
+.trs-new-step-input-action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-left: 1px solid #ddd;
+  padding-left: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.trs-new-step-input-action-buttons button {
+  border: 0;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.trs-new-step-input-action-buttons button:hover {
+  cursor: pointer;
+}
+
+.trs-new-step-add-button {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.trs-new-step-add-button:hover {
+  background-color: var(--hovered-color);
+}
+
+.trs-new-step-cancel-button {
+  background-color: transparent;
+  color: #a1a1a1;
+}
+
+.trs-new-step-cancel-button:hover {
+  background-color: #eee;
+  color: #4a4a4a;
 }
 
 .checkbox-wrapper-30 .checkbox {

@@ -25,6 +25,26 @@ const emptyRoutinesListState = document.querySelector(".routines-empty-state");
 const todayRoutine = document.querySelector(".today-routine");
 const emptyTodayRoutineState = document.querySelector(".today-empty-state");
 
+const todayRoutineStepsList = todayRoutine.querySelector(
+  ".today-routine-steps"
+);
+const todayRoutineStepsListContainer =
+  todayRoutineStepsList.querySelector(".trs-list");
+const routineStepsEmptyState =
+  todayRoutineStepsList.querySelector(".trs-empty-state");
+const addStepsButton = todayRoutineStepsList.querySelector(
+  ".trs-new-step-button"
+);
+
+const addStepInputWrapper = todayRoutineStepsList.querySelector(
+  ".trs-new-step-input-wrapper"
+);
+const addStepInput = addStepInputWrapper.querySelector(".trs-new-step-input");
+
+const cancelAddingStepButton = addStepInputWrapper.querySelector(
+  ".trs-new-step-cancel-button"
+);
+
 let validateInputTimeout = null;
 let validateEditInputTimeout = null;
 
@@ -172,15 +192,60 @@ function renderRoutinesList(routines, selectedRoutine) {
 }
 
 function renderRoutineSteps(routine) {
-  const todayRoutineStepsList = todayRoutine.querySelector(
-    ".today-routine-steps"
-  );
-
-  todayRoutineStepsList
+  todayRoutineStepsListContainer
     .querySelectorAll(".trs-item")
     .forEach((item) => item.remove());
 
-  if (routine.steps.length > 0) {
+  if (routine.steps.length === 0) {
+    routineStepsEmptyState.classList.remove("hidden");
+
+    return;
+  } else if (routine.steps.length > 0) {
+    routineStepsEmptyState.classList.add("hidden");
+
+    routine.steps.forEach((step) => {
+      todayRoutineStepsListContainer.insertAdjacentHTML(
+        "beforeend",
+        `
+              <div class="trs-item" data-step-id="${step.id}">
+                <div class="trs-item-meta">
+                  <div class="checkbox-wrapper-30">
+                    <span class="checkbox">
+                      <input
+                        type="checkbox"
+                        name="inpId"
+                        id="inpId"
+                        class="trs-input"
+                      />
+                      <svg>
+                        <use xlink:href="#checkbox-30" class="checkbox"></use>
+                      </svg>
+                    </span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      style="display: none"
+                    >
+                      <symbol id="checkbox-30" viewBox="0 0 22 22">
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          d="M5.5,11.3L9,14.8L20.2,3.3l0,0c-0.5-1-1.5-1.8-2.7-1.8h-13c-1.7,0-3,1.3-3,3v13c0,1.7,1.3,3,3,3h13 c1.7,0,3-1.3,3-3v-13c0-0.4-0.1-0.8-0.3-1.2"
+                        />
+                      </symbol>
+                    </svg>
+                  </div>
+                  <label for="inpId" class="step-label">${step.name}</label>
+                </div>
+                <div class="trs-item-action-buttons">
+                  <button><i class="fa-solid fa-arrow-up"></i></button>
+                  <button><i class="fa-solid fa-arrow-down"></i></button>
+                  <button class="trs-delete-button">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </button>
+                </div>
+              </div>`
+      );
+    });
   }
 }
 
@@ -195,8 +260,21 @@ function renderTodayRoutine(routine) {
 
     const todayRoutineName = todayRoutine.querySelector(".today-routine-name");
     todayRoutineName.textContent = routine.name;
+
+    renderRoutineSteps(routine);
   }
 }
+
+addStepsButton.addEventListener("click", () => {
+  addStepsButton.classList.add("hidden");
+  addStepInputWrapper.classList.remove("hidden");
+  addStepInput.focus();
+});
+
+cancelAddingStepButton.addEventListener("click", () => {
+  addStepsButton.classList.remove("hidden");
+  addStepInputWrapper.classList.add("hidden");
+});
 
 export {
   openCreateRoutineModal,

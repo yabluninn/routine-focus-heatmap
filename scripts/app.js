@@ -43,6 +43,18 @@ const deleteRoutineButton = editRoutineModal.querySelector(
 
 const routinesList = document.querySelector(".routines-list");
 
+const todayRoutine = document.querySelector(".today-routine");
+const todayRoutineStepsList = todayRoutine.querySelector(
+  ".today-routine-steps"
+);
+const addStepInputWrapper = todayRoutineStepsList.querySelector(
+  ".trs-new-step-input-wrapper"
+);
+const addStepInput = addStepInputWrapper.querySelector(".trs-new-step-input");
+const addStepButton = addStepInputWrapper.querySelector(
+  ".trs-new-step-add-button"
+);
+
 newRoutineButton.addEventListener("click", () => {
   openCreateRoutineModal();
 });
@@ -132,14 +144,6 @@ editRoutineButton.addEventListener("click", () => {
 
   const formData = getEditRoutineFormData();
 
-  const updatedRoutine = {
-    id: selectedRoutine.id,
-    name: formData.name,
-    color: formData.color,
-    weeklyGoal: formData.weeklyGoal,
-    steps: selectedRoutine.steps,
-  };
-
   updateData((data) => {
     const idx = data.routines.findIndex((r) => r.id === selectedRoutine.id);
     if (idx === -1) return;
@@ -168,6 +172,29 @@ deleteRoutineButton.addEventListener("click", () => {
     closeEditRoutineModal();
     renderApp();
   }
+});
+
+addStepButton.addEventListener("click", () => {
+  const selectedRoutine = getSelectedRoutine();
+  if (!selectedRoutine) return;
+
+  const stepName = addStepInput.value.trim();
+
+  if (stepName !== "") {
+    const step = {
+      id: crypto.randomUUID(),
+      name: stepName,
+    };
+
+    updateData((data) => {
+      const idx = data.routines.findIndex((r) => r.id === selectedRoutine.id);
+      if (idx === -1) return;
+
+      data.routines[idx].steps.push(step);
+    });
+
+    renderApp();
+  } else return;
 });
 
 renderApp();
