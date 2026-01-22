@@ -234,7 +234,8 @@ function renderRoutineSteps(routine) {
                       </symbol>
                     </svg>
                   </div>
-                  <label for="step-${step.id}" class="step-label">${step.name}</label>
+                  <p class="trs-step-label">${step.name}</p>
+                  <input type="text" class="trs-item-step-name-input hidden" />
                 </div>
                 <div class="trs-item-action-buttons">
                   <button class="trs-move-up" type="button" title="Move up">

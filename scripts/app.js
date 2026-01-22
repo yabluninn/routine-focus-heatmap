@@ -18,6 +18,8 @@ import {
   validateInputs,
 } from "./ui.js";
 
+let editingStep = null;
+
 function renderApp() {
   const selectedRoutine = getSelectedRoutine();
   renderRoutinesList(getRoutines(), selectedRoutine);
@@ -249,6 +251,76 @@ function moveDownRoutineStep(id, selectedRoutine) {
   return;
 }
 
+function startEditingStep(stepElement, selectedRoutine) {
+  const labelElement = stepElement.querySelector(".trs-step-label");
+  const inputElement = stepElement.querySelector(".trs-item-step-name-input");
+  if (!labelElement || !inputElement) return;
+
+  const stepId = stepElement.dataset.stepId;
+  const currentName = labelElement.textContent.trim();
+
+  if (editingStep) {
+    finishStepEditing({ save: true });
+  }
+
+  labelElement.classList.add("hidden");
+  inputElement.classList.remove("hidden");
+
+  inputElement.value = currentName;
+  inputElement.focus();
+  inputElement.select();
+
+  editingStep = {
+    routineId: selectedRoutine.id,
+    stepId,
+    inputElement,
+    labelElement,
+    startValue: currentName,
+  };
+}
+
+function closeStepEditingUI() {
+  if (!editingStep) return;
+  editingStep.inputElement.classList.add("hidden");
+  editingStep.labelElement.classList.remove("hidden");
+  editingStep = null;
+}
+
+function finishStepEditing({ save }) {
+  if (!editingStep) return;
+
+  const newName = editingStep.inputElement.value.trim();
+  const oldName = editingStep.startValue;
+
+  if (newName === "") {
+    closeStepEditingUI();
+    return;
+  }
+
+  if (newName === oldName) {
+    closeStepEditingUI();
+    return;
+  }
+
+  if (save) {
+    updateData((data) => {
+      const routine = data.routines.find((r) => r.id === editingStep.routineId);
+      if (!routine) return;
+
+      const step = routine.steps.find((s) => s.id === editingStep.stepId);
+      if (!step) return;
+
+      step.name = newName;
+    });
+
+    closeStepEditingUI();
+    renderApp();
+    return;
+  }
+
+  closeStepEditingUI();
+}
+
 todayRoutineStepsListContainer.addEventListener("click", (e) => {
   const selectedRoutine = getSelectedRoutine();
   if (!selectedRoutine) return;
@@ -272,6 +344,39 @@ todayRoutineStepsListContainer.addEventListener("click", (e) => {
   if (e.target.closest(".trs-move-down")) {
     moveDownRoutineStep(stepId, selectedRoutine);
     return;
+  }
+
+  if (e.target.closest(".trs-step-label")) {
+    const selectedRoutine = getSelectedRoutine();
+    if (!selectedRoutine) return;
+
+    const stepElement = e.target.closest(".trs-item");
+    if (!stepElement) return;
+
+    startEditingStep(stepElement, selectedRoutine);
+    return;
+  }
+});
+
+document.addEventListener("mousedown", (e) => {
+  if (!editingStep) return;
+
+  if (e.target === editingStep.inputElement) return;
+
+  finishStepEditing({ save: true });
+});
+
+document.addEventListener("keydown", (e) => {
+  if (!editingStep) return;
+
+  if (e.key === "Enter") {
+    e.preventDefault();
+    finishStepEditing({ save: true });
+  }
+
+  if (e.key === "Escape") {
+    e.preventDefault();
+    finishStepEditing({ save: false });
   }
 });
 
