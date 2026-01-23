@@ -1,4 +1,5 @@
 const INPUT_ERROR_COOLDOWN = 3000;
+const TRUNCATE_LONG_STRINGS_MAX = 10;
 
 const createModal = document.querySelector("#create-modal");
 const editRoutineModal = document.querySelector("#edit-routine-modal");
@@ -53,6 +54,10 @@ const cancelAddingStepButton = addStepInputWrapper.querySelector(
 
 let validateInputTimeout = null;
 let validateEditInputTimeout = null;
+
+function truncateLongString(str) {
+  return str.slice(0, TRUNCATE_LONG_STRINGS_MAX) + "...";
+}
 
 function resetRoutineForm() {
   routineNameInput.value = "";
@@ -191,6 +196,8 @@ function renderRoutinesList(routines, selectedRoutine, todayHistoryMap) {
         selectedRoutineId = selectedRoutine.id;
       }
 
+      const routineName = truncateLongString(routine.name);
+
       routinesList.insertAdjacentHTML(
         "beforeend",
         `   <article class="routine-item ${
@@ -200,7 +207,7 @@ function renderRoutinesList(routines, selectedRoutine, todayHistoryMap) {
                     <div class="routine-color" style="background: ${
                       routine.color
                     };"></div>
-                    <p class="routine-name">${routine.name}</p>
+                    <p class="routine-name">${routineName}</p>
                 </div>
                 <p class="routine-progress">${progress}%</p>
             </article>`
