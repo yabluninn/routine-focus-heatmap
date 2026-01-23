@@ -35,6 +35,12 @@ const routineStepsEmptyState =
 const addStepsButton = todayRoutineStepsList.querySelector(
   ".trs-new-step-button"
 );
+const todayRoutineProgressLabel = todayRoutine.querySelector(
+  ".today-routine-progress"
+);
+const todayRoutineCompleteButton = todayRoutine.querySelector(
+  ".today-routine-complete-button"
+);
 
 const addStepInputWrapper = todayRoutineStepsList.querySelector(
   ".trs-new-step-input-wrapper"
@@ -148,7 +154,7 @@ function getEditRoutineFormData() {
   return { name, color, weeklyGoal };
 }
 
-function renderRoutinesList(routines, selectedRoutine) {
+function renderRoutinesList(routines, selectedRoutine, todayHistoryMap) {
   if (routines.length === 0) {
     emptyRoutinesListState.classList.remove("hidden");
 
@@ -165,7 +171,19 @@ function renderRoutinesList(routines, selectedRoutine) {
       .forEach((item) => item.remove());
 
     routines.forEach((routine) => {
-      let progress = 0; // temporary
+      const totalSteps = routine.steps.length;
+
+      const routineToday = todayHistoryMap?.[routine.id] ?? {
+        completedStepIds: [],
+      };
+
+      const existingStepIds = new Set(routine.steps.map((s) => s.id));
+      const doneSteps = routineToday.completedStepIds.filter((id) =>
+        existingStepIds.has(id)
+      ).length;
+
+      const progress =
+        totalSteps === 0 ? 0 : Math.round((doneSteps / totalSteps) * 100);
 
       let selectedRoutineId = -1;
 
@@ -191,7 +209,7 @@ function renderRoutinesList(routines, selectedRoutine) {
   }
 }
 
-function renderRoutineSteps(routine) {
+function renderRoutineSteps(routine, todayState) {
   todayRoutineStepsListContainer
     .querySelectorAll(".trs-item")
     .forEach((item) => item.remove());
@@ -204,6 +222,7 @@ function renderRoutineSteps(routine) {
     routineStepsEmptyState.classList.add("hidden");
 
     routine.steps.forEach((step) => {
+      const done = todayState.completedStepIds.includes(step.id);
       todayRoutineStepsListContainer.insertAdjacentHTML(
         "beforeend",
         `
@@ -216,6 +235,7 @@ function renderRoutineSteps(routine) {
                         name="inpId"
                         id="step-${step.id}"
                         class="trs-input"
+                        ${done ? "checked" : ""}
                       />
                       <svg>
                         <use xlink:href="#checkbox-30" class="checkbox"></use>
@@ -234,7 +254,9 @@ function renderRoutineSteps(routine) {
                       </symbol>
                     </svg>
                   </div>
-                  <p class="trs-step-label">${step.name}</p>
+                  <p class="trs-step-label ${done ? "done" : ""}">${
+          step.name
+        }</p>
                   <input type="text" class="trs-item-step-name-input hidden" />
                 </div>
                 <div class="trs-item-action-buttons">
@@ -254,7 +276,7 @@ function renderRoutineSteps(routine) {
   }
 }
 
-function renderTodayRoutine(routine) {
+function renderTodayRoutine(routine, todayState) {
   if (routine === null) {
     todayRoutine.classList.add("hidden");
     emptyTodayRoutineState.classList.remove("hidden");
@@ -266,7 +288,31 @@ function renderTodayRoutine(routine) {
     const todayRoutineName = todayRoutine.querySelector(".today-routine-name");
     todayRoutineName.textContent = routine.name;
 
-    renderRoutineSteps(routine);
+    if (!todayState) {
+      todayState = { completedStepIds: [], isCompleted: false };
+    }
+
+    const totalSteps = routine.steps.length;
+    const existingStepIds = new Set(routine.steps.map((s) => s.id));
+    const doneSteps = todayState.completedStepIds.filter((id) =>
+      existingStepIds.has(id)
+    ).length;
+
+    const progress =
+      totalSteps === 0 ? 0 : Math.round((doneSteps / totalSteps) * 100);
+
+    todayRoutineProgressLabel.textContent = `Progress: ${progress}%`;
+
+    const canComplete = totalSteps > 0 && doneSteps === totalSteps;
+    const isBlocked = !canComplete || todayState.isCompleted;
+
+    todayRoutineCompleteButton.classList.toggle("disabled-complete", isBlocked);
+    todayRoutineCompleteButton.disabled = isBlocked;
+    todayRoutineCompleteButton.textContent = todayState.isCompleted
+      ? "Completed"
+      : "Complete";
+
+    renderRoutineSteps(routine, todayState);
   }
 }
 

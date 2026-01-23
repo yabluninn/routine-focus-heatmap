@@ -65,6 +65,82 @@ function deleteRoutine(id) {
   save(state.data);
 }
 
+function ensureHistory(todayKey, routineId) {
+  let changed = false;
+
+  if (!state.data.history) {
+    state.data.history = {};
+    changed = true;
+  }
+
+  if (!state.data.history[todayKey]) {
+    state.data.history[todayKey] = {};
+    changed = true;
+  }
+
+  if (!state.data.history[todayKey][routineId]) {
+    state.data.history[todayKey][routineId] = {
+      completedStepIds: [],
+      isCompleted: false,
+    };
+    changed = true;
+  }
+
+  if (changed) save(state.data);
+}
+
+function getRoutineTodayState(routineId) {
+  const todayKey = state.todayKey;
+  ensureHistory(todayKey, routineId);
+
+  const todayState = state.data.history[todayKey][routineId];
+
+  return todayState;
+}
+
+function getTodayHistoryMap() {
+  const todayKey = state.todayKey;
+  if (!state.data.history || !state.data.history[todayKey]) return {};
+  return state.data.history[todayKey];
+}
+
+function toggleStepDone(routineId, stepId) {
+  const todayState = getRoutineTodayState(routineId);
+
+  const existsId = todayState.completedStepIds.includes(stepId);
+
+  if (existsId) {
+    todayState.completedStepIds = todayState.completedStepIds.filter(
+      (id) => id !== stepId
+    );
+    todayState.isCompleted = false;
+  } else {
+    todayState.completedStepIds.push(stepId);
+  }
+
+  save(state.data);
+}
+
+function completeRoutine(routineId) {
+  const routine = state.data.routines.find((r) => r.id === routineId);
+  if (!routine) return false;
+
+  if (routine.steps.length === 0) return false;
+
+  const todayState = getRoutineTodayState(routineId);
+
+  const allDone = routine.steps.every((step) =>
+    todayState.completedStepIds.includes(step.id)
+  );
+
+  if (!allDone) return false;
+
+  todayState.isCompleted = true;
+
+  save(state.data);
+  return true;
+}
+
 export {
   getRoutines,
   getSelectedRoutine,
@@ -72,4 +148,9 @@ export {
   getTodayKey,
   updateData,
   deleteRoutine,
+  ensureHistory,
+  getRoutineTodayState,
+  toggleStepDone,
+  completeRoutine,
+  getTodayHistoryMap,
 };

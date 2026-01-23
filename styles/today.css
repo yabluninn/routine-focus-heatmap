@@ -265,14 +265,16 @@
 .checkbox-wrapper-30 .checkbox {
   --bg: #fff;
   --brdr: #a1a1a1;
-  --brdr-actv: #1e2235;
-  --brdr-hovr: #bbc1e1;
+  --stroke: var(--main-color);
+  --brdr-actv: var(--main-color);
+  --brdr-hovr: var(--main-color);
   --dur: calc((var(--size, 2) / 2) * 0.6s);
   display: inline-block;
   width: calc(var(--size, 1) * 22px);
   position: relative;
   vertical-align: middle;
 }
+
 .checkbox-wrapper-30 .checkbox:after {
   content: "";
   width: 100%;
@@ -363,4 +365,18 @@
 
 .trs-item-step-name-input:focus {
   outline: none;
+}
+
+.done {
+  text-decoration: line-through;
+  color: #bbb;
+}
+
+.disabled-complete {
+  background-color: #ccc;
+}
+
+.disabled-complete:hover {
+  cursor: default;
+  background-color: #ccc;
 }

@@ -1,8 +1,14 @@
 import {
+  completeRoutine,
   deleteRoutine,
+  ensureHistory,
   getRoutines,
+  getRoutineTodayState,
   getSelectedRoutine,
+  getTodayHistoryMap,
+  getTodayKey,
   selectRoutine,
+  toggleStepDone,
   updateData,
 } from "./state.js";
 import {
@@ -22,8 +28,15 @@ let editingStep = null;
 
 function renderApp() {
   const selectedRoutine = getSelectedRoutine();
-  renderRoutinesList(getRoutines(), selectedRoutine);
-  renderTodayRoutine(selectedRoutine);
+
+  const todayState = selectedRoutine
+    ? getRoutineTodayState(selectedRoutine.id)
+    : null;
+
+  const todayHistoryMap = getTodayHistoryMap();
+
+  renderRoutinesList(getRoutines(), selectedRoutine, todayHistoryMap);
+  renderTodayRoutine(selectedRoutine, todayState);
 }
 
 const newRoutineButton = document.querySelector(".header-action-button");
@@ -57,6 +70,9 @@ const addStepInputWrapper = todayRoutineStepsList.querySelector(
 const addStepInput = addStepInputWrapper.querySelector(".trs-new-step-input");
 const addStepButton = addStepInputWrapper.querySelector(
   ".trs-new-step-add-button"
+);
+const todayRoutineCompleteButton = todayRoutine.querySelector(
+  ".today-routine-complete-button"
 );
 
 newRoutineButton.addEventListener("click", () => {
@@ -136,6 +152,11 @@ routinesList.addEventListener("click", (e) => {
   if (!id) return;
 
   selectRoutine(id);
+
+  const selectedRoutine = getSelectedRoutine();
+  if (selectedRoutine) {
+    ensureHistory(getTodayKey(), selectedRoutine.id);
+  }
 
   renderApp();
 });
@@ -347,13 +368,18 @@ todayRoutineStepsListContainer.addEventListener("click", (e) => {
   }
 
   if (e.target.closest(".trs-step-label")) {
-    const selectedRoutine = getSelectedRoutine();
-    if (!selectedRoutine) return;
-
-    const stepElement = e.target.closest(".trs-item");
-    if (!stepElement) return;
-
     startEditingStep(stepElement, selectedRoutine);
+    return;
+  }
+
+  const clickedCheckbox =
+    e.target.matches("input.trs-input") ||
+    e.target.closest(".checkbox-wrapper-30") ||
+    e.target.closest(".checkbox");
+
+  if (clickedCheckbox) {
+    toggleStepDone(selectedRoutine.id, stepId);
+    renderApp();
     return;
   }
 });
@@ -378,6 +404,15 @@ document.addEventListener("keydown", (e) => {
     e.preventDefault();
     finishStepEditing({ save: false });
   }
+});
+
+todayRoutineCompleteButton.addEventListener("click", () => {
+  const selectedRoutine = getSelectedRoutine();
+  if (!selectedRoutine) return;
+
+  completeRoutine(selectedRoutine.id);
+
+  renderApp();
 });
 
 renderApp();
