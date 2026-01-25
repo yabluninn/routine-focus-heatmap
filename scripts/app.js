@@ -199,7 +199,7 @@ deleteRoutineButton.addEventListener("click", () => {
   }
 });
 
-addStepButton.addEventListener("click", () => {
+function addStep() {
   const selectedRoutine = getSelectedRoutine();
   if (!selectedRoutine) return;
 
@@ -218,8 +218,21 @@ addStepButton.addEventListener("click", () => {
       data.routines[idx].steps.push(step);
     });
 
+    addStepInput.value = "";
+
     renderApp();
   } else return;
+}
+
+addStepButton.addEventListener("click", () => {
+  addStep();
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    addStep();
+  }
 });
 
 function deleteRoutineStep(id, selectedRoutine) {
