@@ -49,6 +49,8 @@
   align-items: start;
   flex-direction: column;
   gap: 8px;
+  border-top: 1px solid #ddd;
+  padding-top: 8px;
 }
 
 .heatmap-meta {

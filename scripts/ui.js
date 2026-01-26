@@ -206,7 +206,7 @@ function renderRoutinesList(routines, selectedRoutine, todayHistoryMap) {
         "beforeend",
         `   <article class="routine-item ${
           routine.id === selectedRoutineId ? "active" : ""
-        }" data-routine-id="${routine.id}">
+        }" data-routine-id="${routine.id}" title="${routine.name}">
                 <div class="routine-item-meta">
                     <div class="routine-color" style="background: ${
                       routine.color
