@@ -41,3 +41,33 @@
 .stats-item span {
   font-weight: 600;
 }
+
+.heatmap-container {
+  width: 100%;
+}
+
+.heatmap-item {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.heatmap-item-lvl-0 {
+  background-color: #ccc;
+}
+
+.heatmap-item-lvl-1 {
+  background-color: rgba(177, 42, 255, 0.2);
+}
+
+.heatmap-item-lvl-2 {
+  background-color: rgba(177, 42, 255, 0.4);
+}
+
+.heatmap-item-lvl-3 {
+  background-color: rgba(177, 42, 255, 0.6);
+}
+
+.heatmap-item-lvl-4 {
+  background-color: rgba(177, 42, 255, 0.8);
+}

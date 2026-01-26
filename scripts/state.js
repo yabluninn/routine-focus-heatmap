@@ -141,6 +141,19 @@ function completeRoutine(routineId) {
   return true;
 }
 
+function getHistoryDayMap(dateKey) {
+  if (!state.data.history || !state.data.history[dateKey]) return {};
+  return state.data.history[dateKey];
+}
+
+function getCompletedCountForDay(dateKey) {
+  if (!state.data.history || !state.data.history[dateKey]) return 0;
+
+  const dayMap = getHistoryDayMap(dateKey);
+
+  return Object.values(dayMap).filter((r) => r.isCompleted).length;
+}
+
 export {
   getRoutines,
   getSelectedRoutine,

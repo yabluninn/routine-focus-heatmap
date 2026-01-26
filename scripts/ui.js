@@ -52,6 +52,8 @@ const cancelAddingStepButton = addStepInputWrapper.querySelector(
   ".trs-new-step-cancel-button"
 );
 
+const heatmapContainer = document.querySelector(".heatmap-container");
+
 let validateInputTimeout = null;
 let validateEditInputTimeout = null;
 
