@@ -44,16 +44,32 @@
 
 .heatmap-container {
   width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 6px;
+
+  width: max-content;
+  margin-top: 12px;
 }
 
 .heatmap-item {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 4px;
+
+  background: #1c1f26;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+
+.heatmap-item:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
 }
 
 .heatmap-item-lvl-0 {
-  background-color: #ccc;
+  background-color: #eee;
 }
 
 .heatmap-item-lvl-1 {
@@ -70,4 +86,17 @@
 
 .heatmap-item-lvl-4 {
   background-color: rgba(177, 42, 255, 0.8);
+}
+
+.heatmap-item-lvl-5 {
+  background-color: rgba(177, 42, 255);
+}
+
+.heatmap-weekday-title {
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -166,4 +166,5 @@ export {
   toggleStepDone,
   completeRoutine,
   getTodayHistoryMap,
+  getCompletedCountForDay,
 };

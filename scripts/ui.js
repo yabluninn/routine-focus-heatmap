@@ -1,3 +1,5 @@
+import { getCompletedCountForDay } from "./state.js";
+
 const INPUT_ERROR_COOLDOWN = 3000;
 const TRUNCATE_LONG_STRINGS_MAX = 10;
 
@@ -334,6 +336,77 @@ addStepsButton.addEventListener("click", () => {
 cancelAddingStepButton.addEventListener("click", () => {
   addStepsButton.classList.remove("hidden");
   addStepInputWrapper.classList.add("hidden");
+});
+
+function renderHeatmapGrid({
+  container,
+  getCompletedCountForDay,
+  endDate = new Date(),
+  days = 28,
+  weekStartsOn = 1,
+} = {}) {
+  if (!container) return;
+  if (typeof getCompletedCountForDay !== "function") return;
+
+  const startOfDay = (date) =>
+    new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+  const addDays = (date, n) =>
+    new Date(date.getFullYear(), date.getMonth(), date.getDate() + n);
+
+  const formatDateKey = (date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  };
+
+  const startOfWeek = (date, weekStartsOn = 1) => {
+    const d = startOfDay(date);
+    const dow = d.getDay();
+    const diff = (dow - weekStartsOn + 7) % 7;
+    return addDays(d, -diff);
+  };
+
+  const rangeEnd = startOfDay(endDate);
+  const rangeStart = addDays(rangeEnd, -(days - 1));
+
+  const gridStart = addDays(startOfWeek(rangeEnd, weekStartsOn), -21);
+
+  const getLevel = (completedCount) => {
+    if (completedCount <= 0) return 0;
+    if (completedCount === 1) return 1;
+    if (completedCount === 2) return 2;
+    if (completedCount === 3) return 3;
+    if (completedCount === 4) return 4;
+    return 5;
+  };
+
+  for (let i = 0; i < 28; i++) {
+    const date = addDays(gridStart, i);
+    const key = formatDateKey(date);
+
+    const inRange = date >= rangeStart && date <= rangeEnd;
+
+    const completedCount = inRange ? getCompletedCountForDay(key) : 0;
+    const lvl = getLevel(completedCount);
+
+    const cell = document.createElement("div");
+    cell.className = `heatmap-item heatmap-item-lvl-${lvl}${
+      inRange ? "" : " out-of-range"
+    }`;
+    cell.dataset.dateKey = key;
+    cell.dataset.count = String(completedCount);
+
+    cell.title = `${key} — completed routines: ${completedCount}`;
+
+    container.appendChild(cell);
+  }
+}
+
+renderHeatmapGrid({
+  container: heatmapContainer,
+  getCompletedCountForDay: getCompletedCountForDay,
 });
 
 export {
