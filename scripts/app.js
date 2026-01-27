@@ -1,5 +1,6 @@
 import {
   completeRoutine,
+  countCompletedForDate,
   deleteRoutine,
   ensureHistory,
   getRoutines,
@@ -18,6 +19,7 @@ import {
   getEditRoutineFormData,
   openCreateRoutineModal,
   openEditRoutineModal,
+  renderHeatmapGrid,
   renderRoutinesList,
   renderTodayRoutine,
   validateEditInputs,
@@ -25,6 +27,8 @@ import {
 } from "./ui.js";
 
 let editingStep = null;
+
+const heatmapContainer = document.querySelector(".heatmap-container");
 
 function renderApp() {
   const selectedRoutine = getSelectedRoutine();
@@ -37,6 +41,11 @@ function renderApp() {
 
   renderRoutinesList(getRoutines(), selectedRoutine, todayHistoryMap);
   renderTodayRoutine(selectedRoutine, todayState);
+
+  renderHeatmapGrid({
+    container: heatmapContainer,
+    getCompletedCountForDay: countCompletedForDate,
+  });
 }
 
 const newRoutineButton = document.querySelector(".header-action-button");

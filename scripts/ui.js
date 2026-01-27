@@ -1,5 +1,3 @@
-import { countCompletedForDate } from "./state.js";
-
 const INPUT_ERROR_COOLDOWN = 3000;
 const TRUNCATE_LONG_STRINGS_MAX = 10;
 
@@ -382,6 +380,10 @@ function renderHeatmapGrid({
     return 5;
   };
 
+  heatmapContainer
+    .querySelectorAll(".heatmap-item")
+    .forEach((item) => item.remove());
+
   for (let i = 0; i < 28; i++) {
     const date = addDays(gridStart, i);
     const key = formatDateKey(date);
@@ -404,11 +406,6 @@ function renderHeatmapGrid({
   }
 }
 
-renderHeatmapGrid({
-  container: heatmapContainer,
-  getCompletedCountForDay: countCompletedForDate,
-});
-
 export {
   openCreateRoutineModal,
   closeCreateRoutineModal,
@@ -420,4 +417,5 @@ export {
   getEditRoutineFormData,
   renderRoutinesList,
   renderTodayRoutine,
+  renderHeatmapGrid,
 };
