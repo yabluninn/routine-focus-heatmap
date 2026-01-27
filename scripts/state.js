@@ -8,6 +8,10 @@ function formatDateKey(date = new Date()) {
   return `${year}-${month}-${day}`;
 }
 
+function addDays(date, days) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + days);
+}
+
 const state = {
   todayKey: formatDateKey(),
   selectedRoutineId: null,
@@ -167,4 +171,6 @@ export {
   completeRoutine,
   getTodayHistoryMap,
   countCompletedForDate,
+  formatDateKey,
+  addDays,
 };
