@@ -54,6 +54,10 @@ const cancelAddingStepButton = addStepInputWrapper.querySelector(
 
 const heatmapContainer = document.querySelector(".heatmap-container");
 
+const streakText = document.querySelector('[data-stat="streak"]');
+const bestStreakText = document.querySelector('[data-stat="bestStreak"]');
+const rateText = document.querySelector('[data-stat="rate"]');
+
 let validateInputTimeout = null;
 let validateEditInputTimeout = null;
 
@@ -406,6 +410,12 @@ function renderHeatmapGrid({
   }
 }
 
+function renderStats(streak, bestStreak, weeklyCompletionRate) {
+  streakText.textContent = `${streak} days`;
+  bestStreakText.textContent = `${bestStreak} days`;
+  rateText.textContent = `${weeklyCompletionRate}%`;
+}
+
 export {
   openCreateRoutineModal,
   closeCreateRoutineModal,
@@ -418,4 +428,5 @@ export {
   renderRoutinesList,
   renderTodayRoutine,
   renderHeatmapGrid,
+  renderStats,
 };

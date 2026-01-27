@@ -12,6 +12,7 @@ import {
   toggleStepDone,
   updateData,
 } from "./state.js";
+import { getBestStreak, getStreak, getWeeklyCompletionRate } from "./stats.js";
 import {
   closeCreateRoutineModal,
   closeEditRoutineModal,
@@ -21,6 +22,7 @@ import {
   openEditRoutineModal,
   renderHeatmapGrid,
   renderRoutinesList,
+  renderStats,
   renderTodayRoutine,
   validateEditInputs,
   validateInputs,
@@ -46,6 +48,8 @@ function renderApp() {
     container: heatmapContainer,
     getCompletedCountForDay: countCompletedForDate,
   });
+
+  renderStats(getStreak(), getBestStreak(), getWeeklyCompletionRate());
 }
 
 const newRoutineButton = document.querySelector(".header-action-button");
