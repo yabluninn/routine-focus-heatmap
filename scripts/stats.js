@@ -49,4 +49,22 @@ function getBestStreak(maxDays = 28) {
   return best;
 }
 
-export { getStreak, getBestStreak };
+function getWeeklyCompletionRate(days = 7) {
+  let daysDone = 0;
+
+  const today = startOfDay(new Date());
+
+  for (let i = 0; i < days; i++) {
+    const dateKey = formatDateKey(addDays(today, -i));
+
+    const completed = countCompletedForDate(dateKey);
+
+    if (completed > 0) {
+      daysDone++;
+    }
+  }
+
+  return Math.round((daysDone / days) * 100);
+}
+
+export { getStreak, getBestStreak, getWeeklyCompletionRate };
