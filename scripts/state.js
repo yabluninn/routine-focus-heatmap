@@ -146,7 +146,7 @@ function getHistoryDayMap(dateKey) {
   return state.data.history[dateKey];
 }
 
-function getCompletedCountForDay(dateKey) {
+function countCompletedForDate(dateKey) {
   if (!state.data.history || !state.data.history[dateKey]) return 0;
 
   const dayMap = getHistoryDayMap(dateKey);
@@ -166,5 +166,5 @@ export {
   toggleStepDone,
   completeRoutine,
   getTodayHistoryMap,
-  getCompletedCountForDay,
+  countCompletedForDate,
 };

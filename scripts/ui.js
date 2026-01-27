@@ -1,4 +1,4 @@
-import { getCompletedCountForDay } from "./state.js";
+import { countCompletedForDate } from "./state.js";
 
 const INPUT_ERROR_COOLDOWN = 3000;
 const TRUNCATE_LONG_STRINGS_MAX = 10;
@@ -406,7 +406,7 @@ function renderHeatmapGrid({
 
 renderHeatmapGrid({
   container: heatmapContainer,
-  getCompletedCountForDay: getCompletedCountForDay,
+  getCompletedCountForDay: countCompletedForDate,
 });
 
 export {
