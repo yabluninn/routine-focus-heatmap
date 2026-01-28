@@ -20,9 +20,9 @@ function getStreak(maxDays = 28) {
     } else {
       break;
     }
-
-    return streak;
   }
+
+  return streak;
 }
 
 function getBestStreak(maxDays = 28) {
