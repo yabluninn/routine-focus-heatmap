@@ -10,7 +10,14 @@ function getStreak(maxDays = 28) {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-  for (let i = 0; i < maxDays; i++) {
+  let startOffset = 0;
+  const todayKey = formatDateKey(today);
+
+  if (countCompletedForDate(todayKey) === 0) {
+    startOffset = 1;
+  }
+
+  for (let i = startOffset; i < maxDays; i++) {
     const dateKey = formatDateKey(addDays(today, -i));
 
     const completed = countCompletedForDate(dateKey);
