@@ -78,16 +78,29 @@ function resetRoutineForm() {
 
 function openCreateRoutineModal() {
   createModal.classList.remove("hidden");
+
+  requestAnimationFrame(() => {
+    createModal.classList.add("is-open");
+  });
   routineNameInput.focus();
 }
 
 function closeCreateRoutineModal() {
-  createModal.classList.add("hidden");
-  resetRoutineForm();
+  createModal.classList.remove("is-open");
+
+  setTimeout(() => {
+    createModal.classList.add("hidden");
+    resetRoutineForm();
+  }, 250);
 }
 
 function openEditRoutineModal(selectedRoutine) {
   editRoutineModal.classList.remove("hidden");
+
+  requestAnimationFrame(() => {
+    editRoutineModal.classList.add("is-open");
+  });
+
   editRoutineNameInput.focus();
 
   editRoutineNameInput.value = selectedRoutine.name;
@@ -96,7 +109,11 @@ function openEditRoutineModal(selectedRoutine) {
 }
 
 function closeEditRoutineModal() {
-  editRoutineModal.classList.add("hidden");
+  editRoutineModal.classList.remove("is-open");
+
+  setTimeout(() => {
+    editRoutineModal.classList.add("hidden");
+  }, 250);
 }
 
 function validateInputs() {
