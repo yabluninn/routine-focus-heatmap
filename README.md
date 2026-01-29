@@ -7,7 +7,7 @@ The goal of this project is to practice real product logic: state management, da
 
 ## Demo
 
-- Local demo: run with Live Server / any static server (see Setup)
+- Live: https://yabluninn.github.io/routine-focus-heatmap/
 
 ---
 
